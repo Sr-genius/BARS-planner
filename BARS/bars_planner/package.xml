@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>bars_planner</name>
+  <version>1.0.0</version>
+  <description>
+    Reactive 3-D safety-corridor planner for quadrotors operating among static
+    and dynamic obstacles.
+  </description>
+
+  <maintainer email="you@example.com">BARS Contributors</maintainer>
+  <license>BSD-3-Clause</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>roscpp</depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>quadrotor_msgs</depend>
+  <depend>pcl_conversions</depend>
+  <depend>pcl_ros</depend>
+</package>

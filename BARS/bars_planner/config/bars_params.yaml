@@ -1,0 +1,52 @@
+# Planner parameters for onboard deployment.
+# Values are loaded into the node's private namespace.
+
+# ---- admissible altitude band (m) ------------------------------------------
+z_min: 0.6
+z_max: 2.0
+z_cruise: 1.0
+
+# ---- motion limits ----------------------------------------------------------
+v_max: 1.0       # m/s
+a_max: 1.0       # m/s^2
+
+# ---- occupancy and corridor geometry ----------------------------------------
+r_infl: 0.40
+res_g: 0.6
+w_climb: 2.5
+plan_int: 0.8
+lookahead: 0.9
+
+# ---- safety barrier ---------------------------------------------------------
+cbf_alpha: 3.0
+cbf_r_safe: 0.42
+cbf_infl: 2.0
+cbf_K: 5
+cbf_brake_margin: 0.05
+
+# ---- dynamic-object clearance -----------------------------------------------
+ped_r_safe: 0.60
+ped_alpha: 4.0
+
+# ---- goal approach ----------------------------------------------------------
+goal_r: 0.01
+approach_min_v: 0.05
+
+# ---- heading control --------------------------------------------------------
+yaw_rate_max: 2.0
+yaw_turn_min_v: 0.15
+yaw_lock_dist: 0.7
+
+# ---- clearance term in the guide cost ---------------------------------------
+clear_ref: 0.9
+w_clear: 0.8
+
+# ---- temporal map -----------------------------------------------------------
+t_keep: 12.0
+map_voxel_size: 0.1
+
+# ---- occupancy grid origin and extent (world frame) --------------------------
+grid_ox: -10.0
+grid_oy: -13.0
+grid_sx: 20.0
+grid_sy: 26.0

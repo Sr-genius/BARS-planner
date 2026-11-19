@@ -1,0 +1,45 @@
+<launch>
+    <!-- Interface defaults. Remap the cloud and odometry arguments to the
+         topics produced by your state estimation stack. -->
+    <arg name="frame_id"      default="world"/>
+    <arg name="cloud_topic"   default="pointcloud"/>
+    <arg name="odom_topic"    default="odometry"/>
+    <arg name="goal_topic"    default="goal"/>
+    <arg name="command_bridge" default="true"/>
+    <arg name="rviz"          default="true"/>
+
+    <!-- 1) Dynamic-object segmentation:
+            pointcloud -> dynamic_objects (world frame). -->
+    <node pkg="bars_planner" type="dynamic_object_segmentation.py"
+          name="dynamic_object_segmentation" output="screen">
+        <param name="cloud_topic" value="$(arg cloud_topic)"/>
+        <param name="dynamic_object_topic" value="dynamic_objects"/>
+        <param name="frame_id" value="$(arg frame_id)"/>
+    </node>
+
+    <!-- 2) Planner. Parameters are loaded into the node's private namespace. -->
+    <node pkg="bars_planner" type="bars_planner" name="bars_planner"
+          output="screen">
+        <rosparam command="load" file="$(find bars_planner)/config/bars_params.yaml"/>
+        <param name="cloud_topic"          value="$(arg cloud_topic)"/>
+        <param name="dynamic_object_topic" value="dynamic_objects"/>
+        <param name="odom_topic"           value="$(arg odom_topic)"/>
+        <param name="goal_topic"           value="$(arg goal_topic)"/>
+        <param name="cancel_topic"         value="cancel"/>
+        <param name="command_topic"        value="position_command"/>
+    </node>
+
+    <!-- 3) Optional generic command bridge. Remove if your controller accepts
+            quadrotor_msgs/PositionCommand directly. -->
+    <node if="$(arg command_bridge)" pkg="bars_planner" type="command_bridge"
+          name="command_bridge" output="screen">
+        <param name="command_in" value="position_command"/>
+        <param name="pose_out"   value="command_pose"/>
+        <param name="twist_out"  value="command_twist"/>
+        <param name="frame_id"   value="$(arg frame_id)"/>
+    </node>
+
+    <!-- 4) RViz for inspection and goal selection. -->
+    <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz"
+          args="-d $(find bars_planner)/rviz/bars.rviz"/>
+</launch>
